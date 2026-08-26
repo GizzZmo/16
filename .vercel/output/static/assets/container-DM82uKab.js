@@ -1,1 +1,0 @@
-import{t as e}from"./jsx-runtime-Cltr0gcK.js";import{u as t}from"./index-C9qbWdlS.js";var n=e();function r({children:e,className:r}){return(0,n.jsx)(`div`,{className:t(`mx-auto w-full max-w-6xl px-4 sm:px-6`,r),children:e})}export{r as t};

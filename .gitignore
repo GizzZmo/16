@@ -1,5 +1,36 @@
+# dependencies
 node_modules/
-.project_id
-.github_repo
+
+# environment & secrets
 .env
 .env.*
+!.env.example
+
+# grok / local identity
+.project_id
+.github_repo
+.node_modules.lock
+
+# build output
+dist/
+.output/
+.vercel/
+.nitro/
+.tanstack/
+.wrangler/
+
+# logs & OS
+*.log
+.DS_Store
+Thumbs.db
+
+# qa / generated
+screenshots/*.png
+screenshots/*.json
+artifacts/
+coverage/
+
+# editor
+.idea/
+.vscode/*
+!.vscode/extensions.json

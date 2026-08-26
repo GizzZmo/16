@@ -211,7 +211,9 @@ function tokenIdentityKey(token: string): string {
             .digest("base64url");
         }
       }
-    } catch {}
+    } catch {
+      // Identity token may be absent or malformed in preview.
+    }
   }
   return createHash("sha256").update(token).digest("base64url");
 }
