@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "Pax Atlas",
+      "hasCanvas": false,
+      "bodyTextLen": 4314,
+      "bodyTextHash": "bace7ef1573c95ec6f87bde8749b0d5a1c3bb861e8c678929a2aa5bf95f614bc",
+      "bodyTextPrefix": "Skip to content Pax Atlas The Pact Atlas Initiatives Timeline Ac",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "Pax Atlas",
+      "hasCanvas": false,
+      "bodyTextLen": 4274,
+      "bodyTextHash": "628e77eb2baae72fd96cab919b7fdb4eff66ef378a61aed719d2b3f517ddb010",
+      "bodyTextPrefix": "Skip to content Pax Atlas AN INDEPENDENT GUIDE The work that hol",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-preview.json"
+}
