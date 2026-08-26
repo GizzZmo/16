@@ -1,0 +1,5 @@
+# Require the maintainer to review changes to workflows and lockfiles.
+/.github/ @GizzZmo
+/package.json @GizzZmo
+/package-lock.json @GizzZmo
+/.nvmrc @GizzZmo

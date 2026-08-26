@@ -2,6 +2,7 @@
 
 [![CI](https://github.com/GizzZmo/UNC/actions/workflows/ci.yml/badge.svg)](https://github.com/GizzZmo/UNC/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/GizzZmo/UNC/actions/workflows/codeql.yml/badge.svg)](https://github.com/GizzZmo/UNC/actions/workflows/codeql.yml)
+[![Dependency review](https://github.com/GizzZmo/UNC/actions/workflows/dependency-review.yml/badge.svg)](https://github.com/GizzZmo/UNC/actions/workflows/dependency-review.yml)
 
 An editorial guide to world peace initiatives — and a standing offer you can sign.
 
@@ -39,11 +40,13 @@ Signatures are stored only on the signer’s device (local storage). They are a 
 - [Tailwind CSS](https://tailwindcss.com/) v4
 - [Vite](https://vite.dev/) 8
 - [Zustand](https://github.com/pmndrs/zustand) for saved initiatives and local pact signatures
-- Node.js 22
+- Node.js 22 (see [`.nvmrc`](.nvmrc))
 
 No accounts and no database. Auth stays off. Pact names never leave the browser.
 
 ## Local development
+
+Requires [Node.js](https://nodejs.org/) 22 and npm 10.
 
 ```bash
 git clone https://github.com/GizzZmo/UNC.git
@@ -59,19 +62,35 @@ The app listens on `http://localhost:8080`.
 | `npm run dev` | Development server |
 | `npm run build` | Production build |
 | `npm run typecheck` | TypeScript (`tsc --noEmit`) |
-| `npm test` | Grok builder self-tests (some read `site.json`) plus app unit tests |
+| `npm run test:unit` | App unit tests (what CI runs) |
+| `npm test` | Grok builder self-tests plus app unit tests |
 | `npm run lint` | ESLint |
 | `npm run format` | Prettier |
 
 CI on GitHub runs lint, the app unit tests, typecheck, and the production build. It does not run the Grok-platform self-tests, which assert sandbox identity independent of this app.
 
+Always commit a lockfile that matches `package.json`. GitHub Actions uses `npm ci`, which refuses to install when the two files have drifted.
+
 ## Continuous integration
 
-GitHub Actions run on every push and pull request to `main`:
+Workflows live in [`.github/workflows/`](.github/workflows/) and follow GitHub’s [secure-use](https://docs.github.com/en/actions/reference/security/secure-use) guidance.
 
-1. **CI** — `npm ci`, lint, unit tests, typecheck, production build. Actions are pinned to full commit SHAs. The workflow has `contents: read` only and cancels superseded runs.
-2. **CodeQL** — JavaScript/TypeScript security analysis (`security-extended` queries), plus a weekly Monday scan.
-3. **Dependabot** — weekly grouped updates for GitHub Actions and npm.
+| Workflow | When it runs | What it does |
+| --- | --- | --- |
+| [CI](.github/workflows/ci.yml) | Push / PR to `main`, manual | `npm ci`, lint, unit tests, typecheck, production build |
+| [CodeQL](.github/workflows/codeql.yml) | Push / PR to `main`, weekly Monday | JavaScript/TypeScript analysis with `security-extended` queries |
+| [Dependency review](.github/workflows/dependency-review.yml) | Pull requests | Fails the PR if a new dependency introduces a high or critical advisory |
+
+Hardening applied to every workflow:
+
+- Actions pinned to **full 40-character commit SHAs** (tags can move; SHAs cannot). Version comments let Dependabot bump them.
+- Default `GITHUB_TOKEN` is `contents: read` only. CodeQL additionally writes `security-events`.
+- `actions/checkout` sets `persist-credentials: false` so the token is not left in `.git`.
+- Runners are pinned to `ubuntu-24.04` (not a floating `ubuntu-latest`).
+- `concurrency` cancels superseded runs on the same branch or pull request.
+- Jobs have an explicit timeout.
+
+[Dependabot](.github/dependabot.yml) opens grouped weekly PRs for GitHub Actions and npm (minor/patch). [CODEOWNERS](.github/CODEOWNERS) flags workflow and lockfile changes for review.
 
 ## Project layout
 
@@ -82,7 +101,7 @@ src/
   components/      Shell, cards, UI primitives
   lib/             Saved shortlist and local pact signatures
 public/images/     Editorial photography
-.github/workflows/ CI and CodeQL
+.github/workflows/ CI, CodeQL, and dependency review
 ```
 
 ## Credits

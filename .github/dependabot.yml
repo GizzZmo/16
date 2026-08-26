@@ -1,4 +1,5 @@
-# Keep Actions and npm dependencies current with grouped, weekly PRs.
+# Keep Actions (including SHA pins) and npm dependencies current.
+# Grouped weekly PRs reduce noise; majors stay ungrouped so they are reviewed.
 version: 2
 updates:
   - package-ecosystem: github-actions
@@ -6,6 +7,7 @@ updates:
     schedule:
       interval: weekly
       day: monday
+    open-pull-requests-limit: 5
     groups:
       github-actions:
         patterns:
