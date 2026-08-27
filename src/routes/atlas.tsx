@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Container } from "@/components/container";
 import { InitiativeCard } from "@/components/initiative-card";
 import { REGIONS, INITIATIVES, initiativesForRegion, type RegionId } from "@/data/catalog";
-import { cn } from "@/lib/utils";
+import { cn, withBase } from "@/lib/utils";
 
 const REGION_IMAGE: Record<RegionId, string> = {
   global: "/images/hero.jpg",
@@ -58,7 +58,7 @@ function AtlasPage() {
                 )}
               >
                 <img
-                  src={REGION_IMAGE[item.id]}
+                  src={withBase(REGION_IMAGE[item.id])}
                   alt=""
                   className="size-full object-cover transition-transform duration-[var(--motion-slow)] ease-[var(--ease-out)] group-hover:scale-[1.04]"
                 />

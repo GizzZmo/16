@@ -12,6 +12,7 @@ import {
   themeById,
   regionById,
 } from "@/data/catalog";
+import { withBase } from "@/lib/utils";
 
 export const Route = createFileRoute("/initiatives/$slug")({
   loader: ({ params }) => {
@@ -40,7 +41,7 @@ function InitiativeDetail() {
   return (
     <main id="main" className="pb-20">
       <div className="relative h-[42vh] min-h-64 overflow-hidden sm:h-[52vh]">
-        <img src={initiative.image} alt={initiative.imageAlt} className="size-full object-cover" />
+        <img src={withBase(initiative.image)} alt={initiative.imageAlt} className="size-full object-cover" />
         <div className="absolute inset-0 bg-hero-scrim/70" />
         <Container className="absolute inset-x-0 bottom-0 pb-8 pt-16">
           {theme ? <Badge className="border-0 bg-primary-fg/12 text-primary-fg">{theme.label}</Badge> : null}

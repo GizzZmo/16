@@ -3,6 +3,7 @@ import { AuthProvider } from "@/lib/auth/provider";
 import { PreviewHostBridge } from "@/components/preview-host-bridge";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { withBase } from "@/lib/utils";
 import appCss from "../styles.css?url";
 
 const APP_NAME = "Pax Atlas";
@@ -21,7 +22,7 @@ export const Route = createRootRoute({
       { name: "theme-color", content: "#f2eee6" },
     ],
     links: [
-      { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
+      { rel: "icon", type: "image/svg+xml", href: withBase("/favicon.svg") },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
@@ -29,8 +30,8 @@ export const Route = createRootRoute({
         href: "https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,500;0,600;1,400&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&display=swap",
       },
       { rel: "stylesheet", href: appCss },
-      { rel: "manifest", href: "/__grok/manifest.webmanifest" },
-      { rel: "apple-touch-icon", href: "/__grok/icon-180.png" },
+      { rel: "manifest", href: withBase("/__grok/manifest.webmanifest") },
+      { rel: "apple-touch-icon", href: withBase("/__grok/icon-180.png") },
     ],
   }),
   component: RootDocument,

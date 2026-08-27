@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/container";
 import { ACTIONS } from "@/data/catalog";
+import { withBase } from "@/lib/utils";
 
 export const Route = createFileRoute("/act")({
   component: ActPage,
@@ -29,7 +30,7 @@ function ActPage() {
         >
           <div className="aspect-[16/8] md:aspect-auto md:w-[42%]">
             <img
-              src="/images/women.jpg"
+              src={withBase("/images/women.jpg")}
               alt=""
               className="size-full object-cover transition-transform duration-[var(--motion-slow)] ease-[var(--ease-out)] group-hover:scale-[1.04]"
             />
@@ -60,7 +61,7 @@ function ActPage() {
           >
             <div className="aspect-[16/8] overflow-hidden">
               <img
-                src={action.image}
+                src={withBase(action.image)}
                 alt=""
                 className="size-full object-cover transition-transform duration-[var(--motion-slow)] ease-[var(--ease-out)] group-hover:scale-[1.04]"
               />

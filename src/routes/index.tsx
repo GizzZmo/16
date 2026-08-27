@@ -4,6 +4,7 @@ import { Container } from "@/components/container";
 import { InitiativeCard } from "@/components/initiative-card";
 import { Button } from "@/components/ui/button";
 import { INITIATIVES, REGIONS, STATS, THEMES, TIMELINE, initiativesForRegion } from "@/data/catalog";
+import { withBase } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({ component: Home });
 
@@ -25,7 +26,7 @@ function Home() {
     <main id="main">
       <section className="relative min-h-[78vh] overflow-hidden">
         <img
-          src="/images/hero.jpg"
+          src={withBase("/images/hero.jpg")}
           alt="An ancient olive grove at first light, mist between the trunks."
           className="absolute inset-0 size-full object-cover"
         />
@@ -85,7 +86,7 @@ function Home() {
           </div>
           <Link to="/pact" className="relative aspect-[4/3] overflow-hidden rounded-xl">
             <img
-              src="/images/women.jpg"
+              src={withBase("/images/women.jpg")}
               alt="An empty hall in morning light, an olive sprig in a glass of water."
               className="size-full object-cover"
             />
@@ -163,7 +164,7 @@ function Home() {
                   className="group relative aspect-[4/3] overflow-hidden rounded-xl"
                 >
                   <img
-                    src={REGION_IMAGE[region.id]}
+                    src={withBase(REGION_IMAGE[region.id])}
                     alt=""
                     className="size-full object-cover transition-transform duration-[var(--motion-slow)] ease-[var(--ease-out)] group-hover:scale-[1.04]"
                   />

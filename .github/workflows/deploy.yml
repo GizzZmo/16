@@ -1,0 +1,78 @@
+# Publish a static prerender of Pax Atlas to GitHub Pages.
+# CI still builds the Vercel Nitro server. This workflow sets GITHUB_PAGES=true
+# so TanStack Start prerenders HTML (SPA shell + crawled routes) into
+# `.vercel/output/static`, then the official Pages actions publish it with OIDC.
+#
+# Third-party actions are pinned to full commit SHAs. Production deploys are
+# not cancelled mid-publish (GitHub Pages starter-workflow guidance).
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Prerender
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Unit tests
+        run: npm run test:unit
+
+      - name: Configure Pages
+        id: pages
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+
+      - name: Prerender static site
+        env:
+          GITHUB_PAGES: "true"
+          PAGES_BASE: ${{ steps.pages.outputs.base_path }}
+        run: npm run build
+
+      - name: Prepare Pages artifact
+        run: node scripts/prepare-pages.mjs
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: .vercel/output/static
+          include-hidden-files: true
+
+  deploy:
+    name: Publish
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0

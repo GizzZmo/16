@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Badge } from "@/components/ui/badge";
 import { SaveButton } from "@/components/save-button";
 import { themeById, type Initiative } from "@/data/catalog";
-import { cn } from "@/lib/utils";
+import { cn, withBase } from "@/lib/utils";
 
 export function InitiativeCard({
   initiative,
@@ -26,7 +26,7 @@ export function InitiativeCard({
         className={cn("block overflow-hidden", featured ? "md:w-[46%] md:min-h-[280px]" : "aspect-[3/2]")}
       >
         <img
-          src={initiative.image}
+          src={withBase(initiative.image)}
           alt={initiative.imageAlt}
           className="size-full object-cover transition-transform duration-[var(--motion-slow)] ease-[var(--ease-out)] group-hover:scale-[1.03]"
         />
