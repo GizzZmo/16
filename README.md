@@ -85,6 +85,9 @@ Workflows live in [`.github/workflows/`](.github/workflows/) and follow GitHub�
 
 The live site is **[https://gizzzmo.github.io/16/](https://gizzzmo.github.io/16/)**. The deploy job uses the official Pages actions (`configure-pages`, `upload-pages-artifact`, `deploy-pages`) with OIDC — no deploy tokens. Asset URLs and the router `basepath` are set from the Pages `base_path` so the app works under `/16/`.
 
+GitHub Pages has to be switched on **once** for a new repository. Open [Settings → Pages](https://github.com/GizzZmo/16/settings/pages), set **Source** to **GitHub Actions**, then re-run [Deploy](https://github.com/GizzZmo/16/actions/workflows/deploy.yml). After that, every push to `main` publishes by itself.
+
+
 Hardening applied to every workflow:
 
 - Actions pinned to **full 40-character commit SHAs** (tags can move; SHAs cannot). Version comments let Dependabot bump them.
